@@ -25,13 +25,15 @@ def translate_document():
             return jsonify({"error": "Missing required fields: file_base64, source, or target"}), 400
 
         # Optional fields
-        filename = data.get("filename") or "document.txt"
+        filename = data.get("filename") or "document.docx"  # default to .docx
         filename = os.path.basename(filename)  # sanitize filename
+        if not filename.strip():
+            filename = "document.docx"  # fallback if filename is empty
         style = data.get("style") or "neutral"
         adapt_to = data.get("adapt_to") or []
         glossaries = data.get("glossaries") or []
 
-        # Decode Base64
+        # Decode Base64 safely
         try:
             file_bytes = base64.b64decode(file_b64)
         except Exception as e:
