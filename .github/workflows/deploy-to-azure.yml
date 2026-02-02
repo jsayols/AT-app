@@ -1,0 +1,24 @@
+name: Build and Push to ACR
+
+on:
+  push:
+    branches: [ "main" ] # Triggers whenever you push to main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.LOGINSERVER }}
+          username: ${{ secrets.PASSWORD }}
+          password: ${{ secrets.USERNAME }}
+
+      - name: Build and push image
+        run: |
+          docker build . -t ${{ secrets.LOGINSERVER }}/my-app:${{ github.sha }}
+          docker push ${{ secrets.LOGINSERVER }}/my-app:${{ github.sha }}
