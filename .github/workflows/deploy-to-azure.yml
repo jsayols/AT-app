@@ -20,5 +20,5 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/my-app:${{ github.sha }}
-          docker push ${{ secrets.ACR_LOGIN_SERVER }}/my-app:${{ github.sha }}
+          docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/MT-AT-app:${{ github.sha }}
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/MT-AT-app:${{ github.sha }}
